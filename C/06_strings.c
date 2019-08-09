@@ -47,10 +47,10 @@ int main()
 				printf("string 1: %s\n", s1);
 				printf("string 2: %s\n", s2);
 				locationRes = location(s1, s2);
-				printf("Index: %d", locationRes);
+				printf("Index: %d\n", locationRes);
 				break;
 			case 5:
-				printf("Goodbye\n");
+				printf("Goodbye!\n");
 				break;
 		default: printf("Wrong Choice. Enter again\n");
 				 break;
@@ -78,7 +78,8 @@ int int2Bin()
 		decimal /= 2;
 		i++;
 	}
-
+	
+	printf("-> Binary: ");
 	for (i = size-1; i >=0; i--)
 	{
 		printf("%d", binary[i]);
@@ -91,7 +92,7 @@ int int2Bin()
 2^0 is the first wight, 2^1 second..*/
 void Bin2Int()
 {
-	unsigned int binary;
+	int binary;
 	int decimal = 0, weight = 1, rem; 
 	printf("Enter binary number: ");
 	scanf("%d", &binary);
