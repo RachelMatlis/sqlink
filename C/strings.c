@@ -16,8 +16,7 @@ int main()
 	char s5[30] = "Rachel";
 	char s6[30] = "Rachel";
 	int strcmpRes;
-
-
+	
 	printf("Strcpy(%s, %s)= ", s1, s2);
 	myStrcpy(s1, s2);
 
