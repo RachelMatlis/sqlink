@@ -1,8 +1,8 @@
 #include<stdio.h>
 #include <string.h>
 
-int int2Bin();
-void Bin2Int();
+void int2Bin();
+void bin2Int();
 void squeeze(char*, char*);
 int location(char*, char*);
 
@@ -23,7 +23,7 @@ int main()
 	{
 		printf("\nChoose function or quite:\n");
 		printf("1. int2Bin()\n");
-		printf("2. Bin2Int()\n");
+		printf("2. bin2Int()\n");
 		printf("3. squeeze()\n");
 		printf("4. location()\n");
 		printf("5. Quite\n");
@@ -31,29 +31,29 @@ int main()
 
 		switch (choice)
 		{
-			case 1: 
-				int2Bin();
-				break;
-			case 2: 
-				Bin2Int();
-				break;
-			case 3: 
-				printf("string 1: %s\n", s3);
-				printf("string 2: %s\n", s4);
-				printf("After squeeze: ");
-				squeeze(s3, s4);
-				break;
-			case 4:
-				printf("string 1: %s\n", s1);
-				printf("string 2: %s\n", s2);
-				locationRes = location(s1, s2);
-				printf("Index: %d\n", locationRes);
-				break;
-			case 5:
-				printf("Goodbye!\n");
-				break;
+		case 1:
+			int2Bin();
+			break;
+		case 2:
+			bin2Int();
+			break;
+		case 3:
+			printf("string 1: %s\n", s3);
+			printf("string 2: %s\n", s4);
+			printf("After squeeze: ");
+			squeeze(s3, s4);
+			break;
+		case 4:
+			printf("string 1: %s\n", s1);
+			printf("string 2: %s\n", s2);
+			locationRes = location(s1, s2);
+			printf("Index: %d\n", locationRes);
+			break;
+		case 5:
+			printf("Goodbye!\n");
+			break;
 		default: printf("Wrong Choice. Enter again\n");
-				 break;
+			break;
 		}
 
 	} while (choice != 5);
@@ -61,13 +61,13 @@ int main()
 	return 0;
 }
 
-/*To convert integer to binary, 
-start with the integer in question and divide it by 2 keeping notice of the quotient and the remainder. 
-Continue dividing the quotient by 2 until you get a quotient of zero. 
+/*To convert integer to binary,
+start with the integer in question and divide it by 2 keeping notice of the quotient and the remainder.
+Continue dividing the quotient by 2 until you get a quotient of zero.
 Then just write out the remainders in the reverse order.*/
-int int2Bin()
+void int2Bin()
 {
-	int binary[10],decimal , i=0,size=0;
+	int binary[10], decimal, i = 0, size = 0;
 	printf("Enter decimal number: ");
 	scanf("%d", &decimal);
 
@@ -78,9 +78,9 @@ int int2Bin()
 		decimal /= 2;
 		i++;
 	}
-	
+
 	printf("-> Binary: ");
-	for (i = size-1; i >=0; i--)
+	for (i = size - 1; i >= 0; i--)
 	{
 		printf("%d", binary[i]);
 	}
@@ -88,16 +88,16 @@ int int2Bin()
 	printf("\n");
 }
 
-/* 1001 -> 2^3 * 1 + 2^2 * 0 + 2^1 * 0 + 2^0 * 1 
+/* 1001 -> 2^3 * 1 + 2^2 * 0 + 2^1 * 0 + 2^0 * 1
 2^0 is the first wight, 2^1 second..*/
-void Bin2Int()
+void bin2Int()
 {
 	int binary;
-	int decimal = 0, weight = 1, rem; 
+	int decimal = 0, weight = 1, rem;
 	printf("Enter binary number: ");
 	scanf("%d", &binary);
-	
-	while (binary !=0)
+
+	while (binary != 0)
 	{
 		rem = binary % 10;
 		decimal += rem * weight;
@@ -124,7 +124,7 @@ void squeeze(char* s1, char* s2)
 
 		printString(s1);
 		printf("\n");
-	}	
+	}
 }
 
 void removeChar(char *s, char c)
@@ -135,7 +135,7 @@ void removeChar(char *s, char c)
 		if (s[i] != c)
 		{
 			s[j] = s[i];
-			j++; 
+			j++;
 		}
 	}
 
@@ -162,7 +162,7 @@ int location(char* s1, char* s2)
 
 				if (s2[j] == '\0') /*all s2 is in s1*/
 				{
-					break; 
+					break;
 				}
 				else /*not all s2 is in s1*/
 				{
