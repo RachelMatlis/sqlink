@@ -13,6 +13,8 @@ DA* createDA(int capacity)
         da-> capacity = capacity;
         return da;
     }
+	
+	return NULL;
 }
 
 void destroyDA(DA* da)
