@@ -19,6 +19,11 @@ void destroyDA(DA* da)
 {
 	if(da)
 	{
+		if(da->arr)
+		{
+			free(da);	
+		}
+		
 		free(da->arr);
 		free(da);
 	}
