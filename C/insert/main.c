@@ -7,7 +7,7 @@ int main(void)
 {
 	int capacity=0, num =0, iteration =0;
 	DA* da = NULL;
-
+	
 	printf("Enter array capacity: \n");
 	scanf("%d", &capacity);
 	
@@ -25,7 +25,6 @@ int main(void)
 	}
 	
 	printArr(da);
-	
 	destroyDA(da);
-    return 0;
+        return 0;
 }
