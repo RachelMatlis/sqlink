@@ -22,9 +22,10 @@ int main(void)
 			insert(da, num);
 			iteration++;
 		}
+		
+		printArr(da);
+		destroyDA(da);
 	}
 	
-	printArr(da);
-	destroyDA(da);
         return 0;
 }
