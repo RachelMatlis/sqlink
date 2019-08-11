@@ -8,10 +8,10 @@ DA* createDA(int capacity)
 	
 	if(da)
     {
-        da->arr = (int *)malloc(capacity* sizeof(int));
-        da->index = 0;
-        da-> capacity = capacity;
-        return da;
+			da->arr = (int *)malloc(capacity* sizeof(int));
+			da->index = 0;
+			da-> capacity = capacity;
+			return da;
     }
 	
 	return NULL;
