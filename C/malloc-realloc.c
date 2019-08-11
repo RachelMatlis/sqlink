@@ -39,8 +39,7 @@ int* insert(int *ip, int* index,int* capacity, int num)
 	}
 	else
 	{
-		(*capacity)++;
-		ip = (int*)realloc(ip,(*capacity) *sizeof(int));
+		ip = (int*)realloc(ip,(*capacity +1) *sizeof(int));
 		ip[*index] = num;
 		(*index)++;
 		(*capacity)++;
