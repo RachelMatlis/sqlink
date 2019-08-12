@@ -1,22 +1,28 @@
 #ifndef FUNCTIONS_H_
 #define FUNCTIONS_H_
 
-/*Appointment Diary”*/
-typedef struct{ 
-	
+#include <stdio.h>
+#include<stdlib.h>
+
+/*Meetings Array*/
+typedef struct {
+
+	float beginT;
+	float endT;
+	int roomNumer;
+
+}Meeting;
+
+/*Appointment Diary*/
+typedef struct {
+
 	Meeting** meetings;
 	int meetingsAmount;
 	int index;
-	
+
 }AD;
 
-typedef struct{ 
-	
-	float beginT;
-	float endT;
-	int roomNumer; 
-	
-}Meeting;
+/* AD* meeting */
 
 AD* create_AD(int meetingsAmount);
 Meeting* create_meeting();
