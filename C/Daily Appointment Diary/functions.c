@@ -1,6 +1,3 @@
-#include "functions.h"
-
-
 AD* create_AD(int meetingsAmount)
 {
 	AD* calendar = (AD*)malloc(sizeof(AD));
@@ -181,6 +178,3 @@ void print_AD(AD* calendar)
 		}
 	}
 }
-
-
-
