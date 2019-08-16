@@ -42,7 +42,7 @@ int main()
 			printf("Enter Bit number:\n");
 			scanf("%d", &bitNumber);
 			bStatus = bitStatus(bm, bitNumber);
-			bStatus == 1 ? printf("Bit is on\n") : printf("Bit is off\n");
+			bStatus == 1 ? printf("Bit %d is on.\n", bitNumber) : printf("Bit %d is off.\n", bitNumber);
 			break;
 		case 4:
 			printf("Goodbye!\n");

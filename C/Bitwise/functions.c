@@ -2,6 +2,17 @@
 #include <stdio.h>
 #include<stdlib.h>
 
+void static printBinaryArr(int *arr, int size)
+{
+	int i = 0;
+	printf("\nBinary:\n");
+	for (i; i < size; i++)
+	{
+		printf("%d", arr[i]);
+	}
+
+	printf("\n");
+}
 
 /*return the index of array that contain the bit number */
 static int findIndexOfBitInArray(int bitNum, int size)
@@ -24,6 +35,24 @@ static int findIndexOfBitInArray(int bitNum, int size)
 	return index;
 }
 
+// function to convert decimal to binary 
+void static decToBinary(int n)
+{
+	// array to store binary number 
+	int binaryNum[32] = {0};
+	int i = 31;
+	
+	while (i > 0 && n>0) 
+	{
+		// storing remainder in binary array 
+		binaryNum[i] = n % 2;
+		n = n / 2;
+		i--;
+	}
+
+	printBinaryArr(binaryNum, 32);
+}
+
 
 BitMap* crateBitMap(int nf)
 {
@@ -35,7 +64,8 @@ BitMap* crateBitMap(int nf)
 		bm->m_size = nf%INT_BITS == 0 ? (nf / INT_BITS) : ((nf / INT_BITS) + 1); /*canculate size of array*/
 		bm->m_arr = (int*)calloc(bm->m_size, sizeof(int)); /*set array size and initial to 0*/
 		if (bm->m_arr) 
-		{	
+		{
+			bm->m_arr[1] = 4;
 			return bm;
 		}
 	}
@@ -72,7 +102,7 @@ int bitOff(BitMap* bm, int bitNum)
 	leftShiftTimesCount = (INT_BITS * (index + 1)) - bitNum;
 
 	mask = mask << leftShiftTimesCount;
-
+	decToBinary(bm->m_arr[index]);
 	return (bm->m_arr[index] & (~mask)); /*not mask & target*/
 
 }
@@ -81,7 +111,7 @@ int bitStatus(BitMap* bm, int bitNum)
 {
 	int index = 0, mask = 1, leftShiftTimesCount = 0;
 
-	if (!bm || bitNum > INT_BITS*bm->m_size) { /*check if null pointer or if bit number is bigger that arrays bits*/
+	if (!bm || bitNum > INT_BITS*(bm->m_size)) { /*check if null pointer or if bit number is bigger that arrays bits*/
 		return -1;
 	}
 
@@ -89,8 +119,10 @@ int bitStatus(BitMap* bm, int bitNum)
 	leftShiftTimesCount = (INT_BITS * (index + 1)) - bitNum; /*find how many time to shift left (num of last bit in arr[index] - bit recieved number)*/
 
 	mask = mask << leftShiftTimesCount;
+	
+	decToBinary(bm->m_arr[index]);
 
-	return !(bm->m_arr[index] & mask);
+	return (bm->m_arr[index] & mask);
 }
 
 void destroyBitMap(BitMap* bm)
@@ -122,3 +154,4 @@ void printArr(int *arr, int size)
 
 	printf("%d.\n", arr[i]);
 }
+
