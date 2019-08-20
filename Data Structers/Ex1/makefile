@@ -1,0 +1,10 @@
+CFLAGS  = -pedantic -g -Wall 
+
+aprog : a1.o a2.o
+	gcc -o aprog a1.o a2.o
+
+a1.o : a1.c a.h
+	gcc -c $(CFLAGS) a1.c
+
+a2.o : a2.c a.h
+	gcc -c $(CFLAGS) a2.c
