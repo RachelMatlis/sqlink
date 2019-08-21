@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-darray{
+struct darray{
 	int *arr; 
 	int index;
 	int capacity; 
@@ -14,15 +14,13 @@ darray{
 AdtStatus DarrayCreate(darray **dArr, size_t initial_capacity)
 {
 
-	(*dArr) = malloc(sizeof(dArr)*initial_capacity);
+	(*dArr) = (*darray)malloc(sizeof(darray));
 	if(*dArr)
 	{
-		if((*dArr)->arr )
+		(*dArr)->arr = (int*)malloc(sizeof(int) * initial_capacity);
+		if(!(*dArr)->arr )
 		{
-			(*dArr)->arr = (int*)malloc(sizeof(int) * initial_capacity);
-		}
-		else
-		{
+			free(*dArr);
 			return AllocationError;
 		}
 
@@ -35,21 +33,14 @@ AdtStatus DarrayCreate(darray **dArr, size_t initial_capacity)
 	}
 
 	return OK;
-
 }
 
 AdtStatus DarrayDestroy(darray *dArr)
 {
-	int i=0;
-
 	if(dArr)
 	{
 		if(dArr->arr)
 		{
-			for(i;i<index;i++)
-			{
-				free(dArr[i]);
-			}
 
 			free(dArr->arr);
 		}
@@ -88,7 +79,10 @@ AdtStatus DarrayAdd(darray *dArr,  int  _item)
 /* Delete number from the end. */
 AdtStatus DarrayDelete(darray *dArr,  int* _item)
 {
+	if(dArr)
+	{
 
+	}
 }
 
 AdtStatus DarrayGet(darray *dArr, size_t _index, int *_item)
@@ -121,7 +115,13 @@ AdtStatus DarraySet(darray *dArr, size_t _index, int  _item)
 
 AdtStatus DarrayItemsNum(darray *dArr, int*  _numOfItems)
 {
+	if(dArr)
+	{
+		_numOfItems = dArr->index;
+		return OK;
+	}
 
+	return AllocationError;
 }
 
 /* in place (ascending) sorting an array of size arraySize */
