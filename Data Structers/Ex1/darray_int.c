@@ -14,20 +14,20 @@ darray{
 AdtStatus DarrayCreate(darray **dArr, size_t initial_capacity)
 {
 
-	*dArr = malloc(sizeof(dArr)*initial_capacity);
-	if(dArr)
+	(*dArr) = malloc(sizeof(dArr)*initial_capacity);
+	if(*dArr)
 	{
-		if(dArr->arr )
+		if((*dArr)->arr )
 		{
-			dArr->arr = (int*)malloc(sizeof(int) * initial_capacity);
+			(*dArr)->arr = (int*)malloc(sizeof(int) * initial_capacity);
 		}
 		else
 		{
 			return AllocationError;
 		}
 
-		dArr->capacity = initial_capacity;
-		dArr->index = 0;
+		(*dArr)->capacity = initial_capacity;
+		(*dArr)->index = 0;
 	}
 	else
 	{
@@ -93,12 +93,30 @@ AdtStatus DarrayDelete(darray *dArr,  int* _item)
 
 AdtStatus DarrayGet(darray *dArr, size_t _index, int *_item)
 {
+	if(dArr)
+	{
+		if(_index < dArr->index)
+		{
+			_item =dArr->arr[_index];
+			return OK;
+		}
+	}
 
+	return AllocationError;
 }
 
 AdtStatus DarraySet(darray *dArr, size_t _index, int  _item)
 {
+	if(dArr)
+	{
+		if(_index <= dArr->index)
+		{
+			dArr->arr[_index] = _item;
+			return OK;
+		}
+	}
 
+	return AllocationError;
 }
 
 AdtStatus DarrayItemsNum(darray *dArr, int*  _numOfItems)
