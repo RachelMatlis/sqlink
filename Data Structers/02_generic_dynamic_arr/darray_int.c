@@ -1,4 +1,3 @@
-#include<stdio.h>
 #include<stdlib.h>
 #include"darray_int.h"
 
@@ -104,6 +103,7 @@ AdtStatus darraySet(darray *dArr, size_t _index, void  *_item)
 	{
 		if(_index <= dArr->index)
 		{
+			free(dArr->arr[_index]);
 			dArr->arr[_index] = _item;
 			return OK;
 		}
@@ -116,7 +116,7 @@ AdtStatus darrayItemsNum(darray *dArr, int*  _numOfItems)
 {
 	if(dArr)
 	{
-		(*_numOfItems) = dArr->index;
+		*_numOfItems = dArr->index;  
 		return OK;
 	}
 

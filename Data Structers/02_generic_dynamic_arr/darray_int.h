@@ -1,6 +1,7 @@
 #ifndef H_DARRAY
 #define H_DARRAY
 #include <stdlib.h>
+
 typedef enum {OK,AllocationError} AdtStatus; 
 typedef void (*elementDestroy)(void* _elem, void* context);
 
@@ -19,4 +20,5 @@ AdtStatus darraySet(darray *dArr, size_t _index, void  *_item);
 AdtStatus darrayItemsNum(darray *dArr, int*  _numOfItems);\
 /* in place (ascending) sorting an array of size arraySize */
 AdtStatus darraySort(darray *dArr); /* correct this !!! */
+
 #endif

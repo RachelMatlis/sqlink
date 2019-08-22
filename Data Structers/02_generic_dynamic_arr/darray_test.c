@@ -8,6 +8,18 @@ typedef struct{
 	int y;
 }Vector;
 
+void vectorDestroy(void *_elem, void *context);
+int vectorsCompare(void* _elemA, void* _elemB);
+void testFunc();
+
+
+
+int main()
+{
+	void testFunc();
+	return 0;
+}
+
 void vectorDestroy(void *_elem, void *context)
 {
 	if(_elem)
@@ -71,10 +83,4 @@ void testFunc()
 	darrayDestroy(myDarr, vectorDestroy,fp);
 	
 	fclose(fp);
-}
-
-int main()
-{
-	void testFunc();
-	return 0;
 }
