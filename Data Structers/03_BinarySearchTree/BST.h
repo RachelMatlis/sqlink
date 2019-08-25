@@ -13,6 +13,6 @@ int insert(Tree** , int );
 int search(Tree* , int data);
 int delte(Tree** , int data);
 int destroy(Tree** );
-int walk(Tree* t, treeWalk wlakFunc, TreeWalk order);
+
 
 #endif
