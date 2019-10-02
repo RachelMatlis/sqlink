@@ -5,34 +5,39 @@
 class MemPage_t : public MemManager_t {
 	public:
 		MemPage_t();
-		MemPage_t(size_t i_cap);
-		~MemPage_t();
-
-		inline bool isEmpty() const;
-		inline bool isFool() const;
+		MemPage_t(size_t);
+		virtual ~MemPage_t();
 
 		inline size_t getCapacity() const;
 
-		virtual size_t readDataFromMemory(void* buffer, size_t size);
-		virtual size_t readDataFromMemory(void* buffer, size_t size, size_t startPos);
-		virtual size_t  writeDataIntoMemory(void* buffer, size_t size);
-		virtual size_t  writeDataIntoMemory(void* buffer, size_t size, size_t startPos);
+		inline static size_t getDefCapacity();
+		inline static size_t setDefCapacity(size_t cap);
+
+		virtual size_t read(void* , size_t);
+		virtual size_t read(void*, size_t, size_t);
+		virtual size_t  write(void*, size_t);
+		virtual size_t  write(void*, size_t, size_t);
 
 	private:
 		MemPage_t(const MemPage_t&) {}
 		MemPage_t& operator=(const MemPage_t&) {}
 
-		char* stream;
-		bool m_isPageFool;
+		char* m_stream;
 		size_t m_capacity; /*length*/
+		static size_t m_defCapacity;
 };
-
-inline bool MemPage_t::isFool() const
-{
-	return m_isPageFool;
-}
 
 inline size_t MemPage_t::getCapacity() const
 {
 	return m_capacity;
+}
+
+inline size_t MemPage_t::getDefCapacity() 
+{
+	return m_defCapacity;
+}
+
+inline size_t MemPage_t::setDefCapacity(size_t i_cap)
+{ 
+	m_defCapacity = i_cap;
 }

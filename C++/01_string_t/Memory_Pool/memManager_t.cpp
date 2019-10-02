@@ -1,32 +1,19 @@
 #include"memManager_t.h"
 
-
-MemManager_t::~MemManager_t() 
-{
-		
-}
-
 MemManager_t::MemManager_t() 
 {
-	
+	m_actualSize = 0;
+	m_currPosInMemory = 0;
+	m_isEmpty = true;
+	m_isFull = false;
 }
 
-size_t MemManager_t::readDataFromMemory(void* buffer, size_t size)
-{
-
+MemManager_t::~MemManager_t() {
 }
 
-size_t MemManager_t::readDataFromMemory(void* buffer, size_t size, size_t startPos)
-{
-
+MemManager_t::MemManager_t(const MemManager_t& m) {
 }
 
-size_t  MemManager_t::writeDataIntoMemory(void* buffer, size_t size)
-{
-
+MemManager_t& MemManager_t::operator=(const MemManager_t& m) {
 }
 
-size_t  MemManager_t::writeDataIntoMemory(void* buffer, size_t size, size_t startPos)
-{
-
-}
