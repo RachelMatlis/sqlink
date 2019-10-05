@@ -4,6 +4,7 @@
 #include "street_t.h"
 #include "city_t.h"
 
+
 int main()
 {
 	int buildingID;
@@ -21,14 +22,34 @@ int main()
 	sStreet.setStreetID(streetID);
 	sStreet.addBuilding2Street(iBuilding);
 
+	try
+	{
+		sStreet.getBuilding(10);
+	}
+	catch (int error)
+	{
+		cout << "Building ID not found"<<endl;
+	}
+
+
 	cout << "Enter new City ID: ";
 	City_t<int, string, string> sCity;
 	cin >> cityID;
 	sCity.setCityID(cityID);
 	sCity.AddStreet(sStreet);
 
+	try
+	{
+		sCity.getStreet("Habika");
+	}
+	catch (int error)
+	{
+		cout << "Street ID not found" << endl;
+	}
+
 	cout << "--->" << sStreet.getStreetID() << ", " << iBuilding.getBuildingID() << ", " << sCity.getCityID() << " was added." << endl;
 
-
-	return 0;
 }
+
+
+

@@ -76,7 +76,8 @@ void Street_t<TIDb, TIDs>::addBuilding2Street(const Building_t<TIDb>& i_building
 template<class TIDb, class TIDs>
 const Building_t<TIDb>& Street_t<TIDb, TIDs>::getBuilding(const TIDb& i_ID) const
 {
-	for (int i = 0; i<m_buildings.size(); ++i)
+	int i = 0;
+	for (; i<m_buildings.size(); ++i)
 	{
 		if (m_buildings[i].getBuildingID() == i_ID)
 		{
@@ -84,6 +85,6 @@ const Building_t<TIDb>& Street_t<TIDb, TIDs>::getBuilding(const TIDb& i_ID) cons
 		}
 	}
 
-	throw string("Building ID not found");
+	throw i;
 }
 

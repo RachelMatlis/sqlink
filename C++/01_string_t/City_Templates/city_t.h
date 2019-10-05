@@ -69,7 +69,8 @@ void City_t<TIDb, TIDs, TIDc>::AddStreet(const Street_t<TIDb, TIDs>& i_street)
 template<class TIDb, class TIDs, class TIDc>
 const Street_t<TIDb, TIDs>& City_t<TIDb, TIDs, TIDc>::getStreet(TIDs i_ID) const
 {
-	for (int i = 0; i<m_streets.size(); ++i)
+	int i=0;
+	for (; i<m_streets.size(); ++i)
 	{
 		if (m_streets[i].getStreetID() == i_ID)
 		{
@@ -77,6 +78,6 @@ const Street_t<TIDb, TIDs>& City_t<TIDb, TIDs, TIDc>::getStreet(TIDs i_ID) const
 		}
 	}
 
-	throw string("Street ID not found");
+	throw i;
 }
 
