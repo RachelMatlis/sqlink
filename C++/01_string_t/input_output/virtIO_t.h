@@ -55,15 +55,14 @@ class virtIO_t{
 protected:
 	
 	FILE* m_fileP;
-	
-private:
-	virtIO_t(const virtIO_t& v){};
-	virtIO_t& operator=(const virtIO_t& v){};
-
 	string m_path;
 	string m_access;
 	enum Status m_status;
 	size_t m_position;
+	
+private:
+	virtIO_t(const virtIO_t& v){};
+	virtIO_t& operator=(const virtIO_t& v){};
 };
 
 inline const string& virtIO_t::getPath() const
