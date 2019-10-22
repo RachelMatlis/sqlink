@@ -68,7 +68,7 @@ void addMeeting(AD* diary)
 		}
 		else
 		{
-			cout << "--> Meetings can’t overlap!" << endl;
+			cout << "--> Meetings canâ€™t overlap!" << endl;
 		}
 
 	}

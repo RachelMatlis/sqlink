@@ -1,8 +1,6 @@
 #include"diary.h"
 #include<iostream>
-
 using namespace std;
-
 
 AD::AD()
 {
@@ -33,7 +31,7 @@ bool AD::insert(Meeting* m)
 		return true;
 	}
 
-	/* Meetings can’t overlap */
+	/* Meetings canâ€™t overlap */
 	while (iterator->second->getEnd() <= startT)
 	{
 		iterator++;
@@ -57,7 +55,7 @@ Meeting* AD::find(const float& begin) const
 
 bool AD::remove(const float& begin)
 {
-	iterConst iterator = m_meetings.find(begin);
+	iter iterator = m_meetings.find(begin);
 	if (iterator != m_meetings.end())
 	{
 		m_meetings.erase(iterator);
@@ -73,4 +71,3 @@ void AD::clean()
 		m_meetings.clear();
 	}
 }
-

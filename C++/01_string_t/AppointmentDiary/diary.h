@@ -24,4 +24,3 @@ private:
 
 	map<float, Meeting*> m_meetings; 
 };
-

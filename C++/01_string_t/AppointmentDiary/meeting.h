@@ -1,7 +1,6 @@
 #pragma once
 #include<string>
 
-
 using namespace std;
 
 class Meeting
@@ -38,5 +37,3 @@ inline string Meeting::getSubject() const
 {
 	return m_subject;
 }
-
-

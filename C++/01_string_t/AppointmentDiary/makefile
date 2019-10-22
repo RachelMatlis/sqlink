@@ -2,7 +2,7 @@
 CC = g++
 
 # define any compile-time flags
-CFLAGS = -ansi -pedantic
+CFLAGS = -ansi -pedantic -g
 
 # define any directories containing header files other than /usr/include
 # EXAMPLE -> INCLUDES = -I/home/proj/include  
@@ -13,7 +13,7 @@ INCLUDES =
 LIBS =
 
 # define the C source files
-SRCS = diary_test.cpp
+SRCS = diary_test.cpp meeting.cpp diary.cpp
 
 # define the C object files 
 #
@@ -34,7 +34,7 @@ MAIN = exe
 #--------------------------------------------------------------------
 
 all: $(MAIN)
-	@echo  Program named ‘Exe’ has been compiled
+	@echo  Program named ‘exe’ has been compiled
 
 $(MAIN): $(OBJS) 
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) $(OBJS) $(LFLAGS) $(LIBS)
@@ -48,4 +48,3 @@ $(MAIN): $(OBJS)
 
 clean:
 	$(RM) *.o *~ $(MAIN)
-
