@@ -5,29 +5,25 @@
 
 using namespace std;
 
-enum Status { 
-	ok_e, 
-	cant_open_file_e, 
-	bad_access_e, 
-	writeErr_e, 
-	readErr_es 
-};
-
 class virtIO_t{
-
+public:
 	virtIO_t();
 	virtIO_t(const string& i_path, const string& i_access);
 	virtual ~virtIO_t();
-	
-	enum Status open(const string& name, const string& access);
+
+	//enum Status { ok_e, cant_open_file_e, bad_access_e, writeErr_e, readErr_es };
+	typedef enum  { ok_e, cant_open_file_e, bad_access_e, writeErr_e, readErr_es }Status;
+
+	void open(const string& name, const string& access);
 	void close();
 
-	inline const string& getPath() const; /*name*/
-	inline const string& getAccess() const; /*mode*/
-	inline enum Status getStatus() const; 
-	inline void setStatus(const enum Status& status);
+	const string& getPath() const { return m_path; };
+	const string& getAccess() const { return m_access; };
+	Status getStatus() const { return m_status; };  
+	void setStatus(const Status& status){ m_status = status; };
 
 	size_t getLength() const;
+
 	size_t getPosition() const;
 	void setPosition(const size_t& position);
 
@@ -51,13 +47,12 @@ class virtIO_t{
 	virtual virtIO_t& operator>>(unsigned long& num) = 0;
 	virtual virtIO_t& operator<<(double num) = 0;
 	virtual virtIO_t& operator>>(double& num) = 0;
-
-protected:
 	
+protected:
 	FILE* m_fileP;
 	string m_path;
 	string m_access;
-	enum Status m_status;
+	Status m_status;
 	size_t m_position;
 	
 private:
@@ -65,25 +60,10 @@ private:
 	virtIO_t& operator=(const virtIO_t& v){};
 };
 
-inline const string& virtIO_t::getPath() const
-{
-	return m_path;
-}
 
-inline enum Status virtIO_t::getStatus() const
-{
-	return m_status;
-}
 
-inline void virtIO_t::setStatus(const enum Status& status)
-{
-	m_status = status;
-}
 
-inline const string& virtIO_t::getAccess() const
-{
-	return m_access;
-}
+
 
 
 
