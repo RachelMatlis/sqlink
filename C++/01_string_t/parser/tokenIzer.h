@@ -95,8 +95,6 @@ void TokenIzer::printTokens() const
 //				   "++", "--", "==", "->" ,
 //				   "(", ")", "[", "]" , "{" , "}" ,";" ,"<", ">", "=", "+", "-", "*", "&" "<<”", ">>"};
 
-//const char* predefinedTypes[7] = { "char", "short", "int", "long", "float", "double", "void" };
-//const char* keyWords[11] = { "if", "else","for" , "while", "class","private", "public", "protected", "main", "const", "virtual" };
-//const char* operators[19] = { "++", "--", "==", "->" , "(", ")", "[", "]" , "{" , "}" ,";" ,"<", ">", "=", "+", "-", "*", "&" "<<”", ">>" };
+
 //vector<char> kw(&kw[0], &kw[sizeof(kw)/sizeof(char)]);
 

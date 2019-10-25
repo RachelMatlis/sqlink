@@ -2,12 +2,13 @@
 #include<string>
 #include <fstream>
 #include"tokenIzer.h"
+#include"analyzer.h"
 
 using namespace std;
 
 class Parser{
 public:
-	Parser() { m_lineNumber = 1; };
+	Parser() { m_lineNumber = 0; };
 	void parse(const string& i_path);
 	~Parser() { m_file.close(); };
 
@@ -18,8 +19,10 @@ private:
 	ifstream m_file; 
 	int m_lineNumber;
 	TokenIzer m_tokenizer;
-	//Analyzer m_analyzer;
+	Analyzer m_analyzer;
 
+	vector<string>::const_iterator first;
+	vector<string>::const_iterator last;
 };
 
 void Parser::parse(const string& i_path)
@@ -30,8 +33,9 @@ void Parser::parse(const string& i_path)
 		string line;
 		while (getline(m_file, line))
 		{
+			m_lineNumber++;
 			m_tokenizer.tokenIzer(line);
-			//m_analyzer.analyzer(m_tokenizer.getTokens(),line);
+			m_analyzer.analyzer(m_tokenizer.getTokens(), m_lineNumber);
 		}
 
 		m_tokenizer.printTokens();
