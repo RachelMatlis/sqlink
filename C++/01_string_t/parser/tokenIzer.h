@@ -13,6 +13,7 @@ public:
 	~TokenIzer() {};
 	void tokenIzer(const string& str);
 	void printTokens() const;
+	vector<string> getTokens() const { return m_tokens; };
 
 private:
 	TokenIzer(const TokenIzer& ti) {};
@@ -82,6 +83,8 @@ void TokenIzer::printTokens() const
 		cout << m_tokens[i]<<endl;
 	}
 }
+
+
 
 
 
