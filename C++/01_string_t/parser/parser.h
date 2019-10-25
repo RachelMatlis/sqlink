@@ -6,9 +6,6 @@
 
 using namespace std;
 
-class Analz;
-class Token;
-
 class Parser{
 public:
 	Parser()
@@ -18,23 +15,16 @@ public:
 
 	void parse(const string& i_path)
 	{
-		open(i_path);
-
-		string str;
-		while (getline(m_file, str)) 
+		m_file.open(i_path);
+		if (m_file) 
 		{
-   			 m_tokenizer.checkLine(str);
-   			 //m_a.analyzer(m_lineNumber);
-   			 break;
-   		}
-	}
+			string line;
+			while (getline(m_file, line)) 
+			{
+				m_tokenizer.tokenIzer(line);
+			}
 
-	void open(const string& i_path)
-	{
-   		m_file.open("test.txt"); 
-		if(m_file)
-		{
-			cout<<"OK"<<endl;
+			m_tokenizer.printTokens();
 		}
 	}
 
@@ -43,15 +33,13 @@ public:
 		m_file.close();
 	}
 
-
-
 private:
 	Parser(const Parser& p) {};
 	Parser& operator=(const Parser& p) {};
 
 	ifstream m_file; 
 	int m_lineNumber;
-	TokenIzer *m_tokenizer;// better cause we dont need include""
+	TokenIzer m_tokenizer;
 	//Analyzer *m_a;
 
 };
