@@ -36,4 +36,8 @@ void Parser::parse(const string& i_path)
 
 		m_tokenizer.printTokens();
 	}
+	else
+	{
+		throw string("Error in openning file");
+	}
 }
