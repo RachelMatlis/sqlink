@@ -12,6 +12,7 @@ public:
 	TokenIzer() {};
 	~TokenIzer() {};
 	void tokenIzer(const string& str);
+	void tokenClear() {m_tokens.clear();};
 	void printTokens() const;
 	vector<string> getTokens() const { return m_tokens; };
 
@@ -49,10 +50,10 @@ void TokenIzer::tokenIzer(const string& str)
 			if (!(isDelimiter(&str[i])))
 			{
 				tok += str[i];
-				if (i == str.length() - 1) // if end of line push the token
+				/*if (i == str.length() - 1) // if end of line push the token
 				{
 					m_tokens.push_back(tok);
-				}
+				}*/
 			}
 			else
 			{
@@ -74,6 +75,11 @@ void TokenIzer::tokenIzer(const string& str)
 			}
 		}
 	}
+
+	if (!tok.empty())
+	{
+		m_tokens.push_back(tok);
+	}
 }
 
 void TokenIzer::printTokens() const
@@ -83,6 +89,7 @@ void TokenIzer::printTokens() const
 		cout << m_tokens[i]<<endl;
 	}
 }
+
 
 
 

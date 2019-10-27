@@ -3,12 +3,12 @@
 
 using namespace std;
 
-int main(int argc, char argv[])
+int main(int argc, char* argv[])
 {
    Parser p;
    try 
    {
-	   p.parse("test1.txt");
+	   p.parse("test2.txt");
    }
    catch (string err)
    {

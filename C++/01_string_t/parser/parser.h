@@ -35,10 +35,10 @@ void Parser::parse(const string& i_path)
 		{
 			m_lineNumber++;
 			m_tokenizer.tokenIzer(line);
+			//m_tokenizer.printTokens();
 			m_analyzer.analyzer(m_tokenizer.getTokens(), m_lineNumber);
+			m_tokenizer.tokenClear();
 		}
-
-		m_tokenizer.printTokens();
 	}
 	else
 	{
