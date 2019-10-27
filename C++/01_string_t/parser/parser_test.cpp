@@ -5,18 +5,16 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-   Parser p;
-   try 
-   {
-	   p.parse("test2.txt");
-   }
-   catch (string err)
-   {
-	   cout << err;
-   }
- 
-
-   int i;
-   cin >> i;
+	Parser p;
+	for (int i = 1; i < argc; ++i)
+	{
+		try
+		{
+			p.parse(argv[i]);
+		}
+		catch (string err)
+		{
+			cout << err;
+		}
+	}
 }
-

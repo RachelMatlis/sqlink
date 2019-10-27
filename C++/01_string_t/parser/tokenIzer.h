@@ -12,7 +12,7 @@ public:
 	TokenIzer() {};
 	~TokenIzer() {};
 	void tokenIzer(const string& str);
-	void tokenClear() {m_tokens.clear();};
+	void tokenClear() { m_tokens.clear(); };
 	void printTokens() const;
 	vector<string> getTokens() const { return m_tokens; };
 
@@ -52,7 +52,7 @@ void TokenIzer::tokenIzer(const string& str)
 				tok += str[i];
 				/*if (i == str.length() - 1) // if end of line push the token
 				{
-					m_tokens.push_back(tok);
+				m_tokens.push_back(tok);
 				}*/
 			}
 			else
@@ -86,7 +86,7 @@ void TokenIzer::printTokens() const
 {
 	for (int i = 0; i < m_tokens.size(); i++)
 	{
-		cout << m_tokens[i]<<endl;
+		cout << m_tokens[i] << endl;
 	}
 }
 
@@ -97,11 +97,4 @@ void TokenIzer::printTokens() const
 
 
 
-//const char* kw[37]={"char", "short", "int", "long", "float", "double", 
-//				   "void", "if", "else","for" , "while", "class","private", "public", "protected", "main", "const", "virtual",  
-//				   "++", "--", "==", "->" ,
-//				   "(", ")", "[", "]" , "{" , "}" ,";" ,"<", ">", "=", "+", "-", "*", "&" "<<”", ">>"};
-
-
-//vector<char> kw(&kw[0], &kw[sizeof(kw)/sizeof(char)]);
 

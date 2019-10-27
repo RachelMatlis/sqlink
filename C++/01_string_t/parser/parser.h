@@ -6,7 +6,7 @@
 
 using namespace std;
 
-class Parser{
+class Parser {
 public:
 	Parser() { m_lineNumber = 0; };
 	void parse(const string& i_path);
@@ -16,7 +16,7 @@ private:
 	Parser(const Parser& p) {};
 	Parser& operator=(const Parser& p) {};
 
-	ifstream m_file; 
+	ifstream m_file;
 	int m_lineNumber;
 	TokenIzer m_tokenizer;
 	Analyzer m_analyzer;
