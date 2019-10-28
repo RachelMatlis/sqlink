@@ -1,5 +1,6 @@
-++--++--++-
+
 int k ()
+float k
 int short ptr 
 main
 else const virtual

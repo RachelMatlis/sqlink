@@ -4,7 +4,6 @@
 
 Analyzer::Analyzer()
 {
-
 	setPredefinedTypes();
 	setkeyWords();
 	setOperators();
@@ -97,7 +96,6 @@ Analyzer::~Analyzer()
 {
 }
 
-
 void Analyzer::analyzer(const vector<string> &tokens, int lineNumber)
 {
 	for (int i = 0; i< tokens.size(); ++i)
@@ -141,6 +139,17 @@ void Analyzer::analyzer(const vector<string> &tokens, int lineNumber)
 			{
 				operatorPlusCount = 0;
 				operatorMinusCount = 0;
+			}
+		}
+		else if(!isType(tokens[i]) && !iskeyWord(tokens[i]) && !isOperator(tokens[i]) && !isDelimeter(tokens[i]))
+		{
+			if(declaredVariables.find(tokens[i]) != declaredVariables.end())
+			{
+				cout<< "line "<<lineNumber<< " : error, variable '" <<tokens[i]<< "' already declared"<<endl;
+			}
+			else
+			{
+				declaredVariables.insert(tokens[i]);
 			}
 		}
 	}
@@ -272,4 +281,60 @@ void Analyzer::plusMinusRule(const string& token, int lineNumber)
 			operatorMinusCount = 0;
 		}	
 	}
+}
+
+void Analyzer::analyzerEnd()
+{
+
+	if(parenthesesCount !=0)
+	{
+		cout<<"error – "<< parenthesesCount << "' (' not closed"<<endl;
+	} 
+	if(bracketsCount !=0)
+	{
+		cout<<"error – "<< bracketsCount << "' [' not closed"<<endl;
+	}
+	if(bracesCount !=0)
+	{
+		cout<<"error – "<< bracesCount << "' {' not closed"<<endl;
+	}
+}
+
+bool Analyzer::isType(const string& token)
+{
+	if(m_predefinedTypes.find(token) != m_predefinedTypes.end())
+	{
+		return true;
+	}
+		
+	return false;
+}
+
+bool Analyzer::iskeyWord(const string& token)
+{
+	if(m_keyWords.find(token) != m_keyWords.end())
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool Analyzer::isOperator(const string& token)
+{
+	if(m_operators.find(token) != m_operators.end())
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool Analyzer::isDelimeter(const string& token)
+{
+	if(m_delimeters.find(token) != m_delimeters.end())
+	{
+		return true;
+	}
+	return false;
 }

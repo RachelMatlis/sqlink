@@ -39,6 +39,7 @@ void Parser::parse(const string& i_path)
 			m_analyzer.analyzer(m_tokenizer.getTokens(), m_lineNumber);
 			m_tokenizer.tokenClear();
 		}
+		m_analyzer.analyzerEnd();
 	}
 	else
 	{

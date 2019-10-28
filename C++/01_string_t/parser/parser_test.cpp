@@ -6,7 +6,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	Parser p;
-	for (int i = 1; i < argc; ++i)
+	/*for (int i = 1; i < argc; ++i)
 	{
 		try
 		{
@@ -16,5 +16,7 @@ int main(int argc, char* argv[])
 		{
 			cout << err;
 		}
-	}
+	}*/
+
+	p.parse("test2_qq.txt");
 }

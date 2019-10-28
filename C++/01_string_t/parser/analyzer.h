@@ -11,6 +11,7 @@ public:
 	~Analyzer();
 
 	void analyzer(const vector<string> &tokens, int lineNumber);
+	void analyzerEnd();
 
 
 private:
@@ -39,9 +40,13 @@ private:
 
 	bool checkVariableNameOk(const string& token, int lineNumber);
 	void checkIfVariableNameDeclared(const string& token, int lineNumber);
-	
 
 	int isPredefinedTypes(const string& token);
+
+	bool isType(const string& token);
+	bool iskeyWord(const string& token);
+	bool isOperator(const string& token);
+	bool isDelimeter(const string& token);
 
 	/*counters*/
 	int parenthesesCount; //(
