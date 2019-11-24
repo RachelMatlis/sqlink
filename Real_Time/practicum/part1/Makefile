@@ -1,6 +1,6 @@
 # this is a minimal makefile for demo purposes, keep it that way...
-obj-m:=messageModule.o
-messageModule-objs:=main.o
+obj-m:=Qmsg.o
+Qmsg-objs:=messageModule.o
 V?=0
 KDIR?=/lib/modules/$(shell uname -r)/build
 # in an embedded system:
