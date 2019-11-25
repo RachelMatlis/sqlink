@@ -10,20 +10,17 @@
 #include <linux/spinlock.h> /* for spinlock_t and ops on it */
 #include <linux/wait.h> /* for wait_queue_head_t and ops on it */
 #include <linux/uaccess.h> /* for copy_to_user, access_ok */
+#include "messageModule.h"
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Rachel and Margarita");
 MODULE_DESCRIPTION("message queue module");
 MODULE_VERSION("4.15.0");
 
-
-/* this is the operations table */
-static const struct file_operations queue_fops = {
-	.owner = THIS_MODULE,
-	//.open = 
-	//.release = write_null,
-};
-
+#define MQ_SEND_MESSAGE 0
+#define MQ_GET_MESSAGE 1
+/* dynamic array of m_queues*/
+static struct my_mq_t* m_queues; 
 /* this variable will store the class */
 static struct class *my_class;
 /* this variable will hold our cdev struct */
@@ -35,7 +32,7 @@ static int mq_count = 8;
 /* this is our first minor (0 by default)*/
 static int first_minor;
 
-
+/*struct of all message queues (8)*/
 struct my_mq_t {
 	size_t size;
 	size_t capacity;
@@ -43,7 +40,86 @@ struct my_mq_t {
 	struct device *mq_device; 
 };
 
-static struct my_mq_t* m_queues; 
+/*single node - contain message*/
+struct kernel_list_elemnt{
+	char* buff;
+	size_t size;
+	struct list_head head;
+};
+/*
+static int mq_open()
+{
+	//int page_num = iminor (inode) -MINOR(first_dev);
+	return 0;
+}
+*/
+/*we design the api, (unsigned long user_struct -always we need to cast)*/
+static long mq_ioctl(struct file *file, unsigned int fd, unsigned long user_struct)
+{
+	int ret;
+	struct message_t message;
+	struct message_t* my_struct = (struct message_t*) user_struct;
+	struct my_mq_t* mq = file->private_data;
+
+	char* my_buf;
+	struct kernel_list_elemnt* newNode;
+	switch(fd)
+	{
+		case MQ_SEND_MESSAGE: //0
+		{
+			/*for the struct <pointer to message, size>*/
+			ret = copy_from_user(&message, my_struct,sizeof(message));
+			if(ret<0)
+			{
+				pr_err("%s: error in copy from user\n",THIS_MODULE->name);
+				return ret;
+			}
+			/*for the message*/
+			my_buf =kmalloc(message.size,GFP_KERNEL);
+			if(IS_ERR(my_buf))
+			{
+				pr_err("%s: error in kmalloc\n", THIS_MODULE->name);
+				return ret;
+			}
+			/*for the message*/
+			ret = copy_from_user(my_buf, message.buff,message.size);
+			if(ret<0)
+			{
+				pr_err("%s: error in copy from user\n",THIS_MODULE->name);
+				return ret;
+			}
+			newNode = (kmalloc(sizeof(newNode), GFP_KERNEL));
+			newNode->buff= my_buf;
+			newNode->size = message.size;
+			list_add_tail(&(newNode->head),&(mq->list));
+			break;
+		}
+		/*case MQ_GET_MESSAGE: //1
+		{
+			if(copy_to_user(my_struct, &message_t,sizeof(message_t)))
+			{
+				return -EFAULT;
+			}
+			break;
+		}*/
+		default:
+		{
+			return -ENOTTY;
+			break;
+		}
+	}
+
+	return 0;
+}
+
+
+/* this is the operations table */
+static const struct file_operations queue_fops = {
+	.owner = THIS_MODULE,
+	//.open = mq_open,
+	.unlocked_ioctl = mq_ioctl,
+	//.release = write_null,
+};
 
 static inline void m_queues_ctor(struct my_mq_t* m_queues)
 {
@@ -133,16 +209,21 @@ static void __exit mq_exit(void)
 {
 	int i;
 	for (i = 0; i < mq_count; i++)
-		device_destroy(my_class, MKDEV(MAJOR(first_dev),
-			MINOR(first_dev)+i));
+	{
+		device_destroy(my_class, MKDEV(MAJOR(first_dev), MINOR(first_dev)+i));
+	}
 	class_destroy(my_class);
 	cdev_del(&cdev);
 	unregister_chrdev_region(first_dev, mq_count);
 	for (i = 0; i < mq_count; i++)
+	{
 		m_queues_dtor(m_queues+i);
+	}
 	kfree(m_queues);
 	pr_info(KBUILD_MODNAME " unloaded successfully\n");
 }
 
 module_init(mq_init);
 module_exit(mq_exit);
+
+/*copy to\from user check if the buffer is valid*/
