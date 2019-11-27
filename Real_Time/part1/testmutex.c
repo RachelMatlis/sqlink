@@ -13,64 +13,59 @@
 #define PRONUM 10
 #define CONSNUM 10
 
-void* producer(void * arg) 
+char* queuePath;
+char* msg;
+
+void* producer(void *arg) 
 {   
-    int fd ,ret, i;
+    int fd ,ret;
     struct message_t reg;
-
-    for(i=0;i<PRONUM;i++)
+    fd=open(queuePath,O_WRONLY);
+    if(fd==-1) 
     {
-    	fd=open("/dev/mq0",O_WRONLY);
-        if(fd==-1) 
-        {
-            fprintf(stderr, "open error\n");
-            return (void*)1;
-        }
-        reg.buff="hello";
-        reg.size=strlen(reg.buff);
-        ret=ioctl(fd,MQ_SEND_MESSAGE,&reg);
-        if(ret==-1) 
-        {
-            fprintf(stderr, "ioctl error\n");
-            return (void*)1;
-        }
-        /*printf("return value from ioctl was %d\n", ret);*/
-        ret=close(fd);
-        if(ret==-1) 
-        {
-            fprintf(stderr, "close error\n");
-            return (void*)1;
-        }
+        fprintf(stderr, "open error [%s]\n", queuePath);
+        return NULL;
     }
-
-    return (void*) 0;
+    reg.buff=msg;
+    reg.size=strlen(msg);
+    ret=ioctl(fd, MQ_SEND_MESSAGE,&reg);
+    if(ret==-1) 
+    {
+        fprintf(stderr, "ioctl error\n");
+        return NULL;
+    }
+    ret=close(fd);
+    if(ret==-1) 
+    {
+        fprintf(stderr, "close error\n");
+        return NULL;
+    }
+    return NULL;
 }
 
 void* consumer() 
 { 
-	int fd, ret,i;
+	int fd, ret;
     char* buffer= (char*)malloc(sizeof(char)*4096);
-    for(i=0;i<CONSNUM;i++)
-    {     
-        fd=open("/dev/mq0",O_RDONLY);
-        if(fd==-1) 
-        {
-            fprintf(stderr, "open error\n");
+    
+    fd=open(queuePath,O_RDONLY);
+    if(fd==-1) 
+    {
+        fprintf(stderr, "open error\n");
+    return (void*)1;
+    }
+    ret=ioctl(fd, MQ_GET_MESSAGE, buffer);
+    if(ret==-1) 
+    {
+        fprintf(stderr, "ioctl error\n");
+    return (void*)1;
+    }
+    printf("The message is %s\n", buffer);
+    ret=close(fd);
+    if(ret==-1) 
+    {
+        fprintf(stderr, "close error\n");
         return (void*)1;
-        }
-        ret=ioctl(fd, MQ_GET_MESSAGE, buffer);
-        if(ret==-1) 
-        {
-            fprintf(stderr, "ioctl error\n");
-        return (void*)1;
-        }
-        printf("The message is %s\n", buffer);
-        ret=close(fd);
-        if(ret==-1) 
-        {
-            fprintf(stderr, "close error\n");
-            return (void*)1;
-        }
     }
 
     free(buffer);
@@ -78,13 +73,19 @@ void* consumer()
 }
 
 
-int main ()
+int main (int argc, char** argv)
 { 
     pthread_t produsers [PRONUM];
     pthread_t consumers [CONSNUM];
    
     int i ,j,w,z;
 
+    queuePath=argv[1];
+    if(argc ==3)
+    {
+        msg = argv[2];
+    }
+    
     for(i=0;i<PRONUM;i++)
     {
          pthread_create(&produsers[i],NULL,producer,&i);   
@@ -107,3 +108,5 @@ int main ()
 
    return 0;
 }
+
+
