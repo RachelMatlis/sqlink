@@ -1,19 +1,34 @@
-# this is a minimal makefile for demo purposes, keep it that way...
-obj-m:=Qmsg.o
-Qmsg-objs:=messageModule.o
-V?=0
-KDIR?=/lib/modules/$(shell uname -r)/build
-# in an embedded system:
-#KDIR:=[where the system maker gave me kernel headers+makefile or the kernel itself which has a makefile]
-#ARCH:=arm
-#CROSS_COMPILE:=[path+common prefix to where the toolchain is]
-# You could also use W=2 and W=3 for more warnings but most kernel headers
-# fail those...
-W?=1
+KERNEL_SOURCE:=/lib/modules/$(shell uname -r)/build
+PWD:=$(shell pwd)
+obj-m:=mq.o
+mq-objs:=main.o
+
+.PHONY: all
+all: modules send_msg recv_msg testmutex 
+ 
 .PHONY: modules
 modules:
-	$(MAKE) -C $(KDIR) M=$(CURDIR) V=$(V) W=$(W) modules
+	$(MAKE) -C $(KERNEL_SOURCE) SUBDIRS=$(PWD) modules
+ 
 .PHONY: clean
 clean:
-	$(MAKE) -C $(KDIR) M=$(CURDIR) V=$(V) clean
-	rm -f *.stamp
+	$(MAKE) -C $(KERNEL_SOURCE) SUBDIRS=$(PWD) clean
+	rm -f testmutex recv_msg send_msg
+
+USER_CFLAGS:=-O2 -ansi -pedantic -Wall -Werror
+send_msg: send_msg.c
+	gcc $(USER_CFLAGS) -o $@ $<
+recv_msg: recv_msg.c
+	gcc $(USER_CFLAGS) -o $@ $<
+testmutex: testmutex.c
+	gcc $(USER_CFLAGS) -o $@ $< -lpthread
+
+.PHONY: insmod
+insmod:
+	sudo insmod ./mq.ko
+	sleep 1
+	sudo chmod 666 /dev/mq*
+
+.PHONY: rmmod
+rmmod:
+	sudo rmmod mq

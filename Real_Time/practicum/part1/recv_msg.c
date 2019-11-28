@@ -12,9 +12,11 @@
 
 int main(int argc, char** argv)
 {
-    int fd,ret;
+   int fd,ret;
+   char* msg;
+   msg = malloc(sizeof(char)*4096);
 
-    fd = open(argv[1], O_WRONLY);
+    fd = open(argv[1], O_RDONLY);
     
     if (fd == -1)
     {
@@ -22,17 +24,12 @@ int main(int argc, char** argv)
     }
     else
     {
-        struct message_t msg;
-        msg.buff = malloc(strlen(argv[2]) * sizeof(char));
-        strcpy(msg.buff, argv[2]);
-        msg.size = strlen(argv[2]);
-        printf("buff: %s, size: %d\n", msg.buff, msg.size);
-        ret=ioctl(fd, MQ_SEND_MESSAGE, &msg);
+        ret=ioctl(fd, MQ_GET_MESSAGE, msg);
         if(ret==-1)
         {
             perror("ioctl error\n");
         }
-        printf("ret= %d\n",ret);
+        printf("%s\n",msg);
         close (fd);
     }
 
