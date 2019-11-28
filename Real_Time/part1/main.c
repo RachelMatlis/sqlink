@@ -61,20 +61,20 @@ static int mq_open(struct inode* inode, struct file *file)
 
 static int queue_not_empty(struct my_mq_t* mq) {
 	int ret;
-	mutex_lock(&mq->mq_mutex);
+	mutex_lock(&mq->mq_mutex);/*we ask if the queue is not empty*/
 	ret=mq->size>0;
 	if(!ret) {
-		mutex_unlock(&mq->mq_mutex);
+		mutex_unlock(&mq->mq_mutex); /*if empty sleep + unlock until message is writing*/
 	}
 	return ret;
 }
 
 static int queue_has_space(struct my_mq_t* mq) {
 	int ret;
-	mutex_lock(&mq->mq_mutex);
+	mutex_lock(&mq->mq_mutex);/*we ask for size of queue -> have to lock!*/
 	ret=mq->size<mq->capacity;
 	if(!ret) {
-		mutex_unlock(&mq->mq_mutex);
+		mutex_unlock(&mq->mq_mutex); /*if no space -> sleep + unlock (till the next read)*/
 	}
 	return ret;
 }
@@ -288,22 +288,3 @@ static void __exit mq_exit(void)
 module_init(mq_init);
 module_exit(mq_exit);
 
-/*
-case:
-	wait_event_interruptible(mq->read_queue,my_list_not_empy(mutex, list));
-	//do work tith list
-
-int my_list_not_empy(mutex, list)
-{
-	mutex_lock(mutex)
-	int ret = !list_empty(list);
-	if(!ret)
-	{
-		mutex_unlock(m);
-	}
-	//mutex lock!!!
-	//int ret= list_empty();
-	//if(ret)
-	//if not empty-> mutex unlock
-	//	mutex_unlock;
-}*/

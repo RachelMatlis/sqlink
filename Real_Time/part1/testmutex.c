@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include "mq.h"
-/*#define MESSEGE 5*/
+
 #define PRONUM 10
 #define CONSNUM 10
 
