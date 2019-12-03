@@ -32,3 +32,18 @@ insmod:
 .PHONY: rmmod
 rmmod:
 	sudo rmmod mq
+
+.PHONY: test_insrmmod
+VARIABLE := number
+
+test_insrmmod:
+	@for number in $$(seq 1 100);\
+	do \
+	sudo insmod mq.ko;\
+	sleep 0.1;\
+	(number=number+1);\
+	sudo rmmod mq;\
+	echo $$number;\
+	done
+
+.PHONY: test_all

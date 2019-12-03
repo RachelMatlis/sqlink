@@ -54,8 +54,8 @@ struct list_struct {
 
 static int mq_open(struct inode* inode, struct file *file)
 {
-	int q_num = iminor (inode) -MINOR(first_dev);
-	file->private_data = m_queues + q_num;
+	int q_num = iminor(inode)-MINOR(first_dev); //find thw queue number
+	file->private_data = m_queues+q_num;
 	return 0;
 }
 

@@ -5,10 +5,8 @@
 #include <string.h>
 #include <sys/ioctl.h>
 #include<sys/stat.h>
-
-
-#include "mq.h"
 #include<stdlib.h>
+#include "mq.h"
 
 int main(int argc, char** argv)
 {
