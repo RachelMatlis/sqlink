@@ -148,12 +148,3 @@ int main()
 	return EXIT_SUCCESS;
 }
 
-/*
-1.epol_create -create epol file dsc.
-2.epol_ctl - add more file descriptor to epol fd.
-3. epoll_pwail - sleep until I can do i/o on 1 or more fd of epol.
-epoll_wail
-array of fd.
-*/
-
-/*what is file descriptor ? - allows user space to speak with kernel (straming of data)*/
